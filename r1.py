@@ -37,4 +37,4 @@ trips.addEvent(2025, lambda r: (r.takeExpense('trip',5)))
 P.runTilEnd(2014)
 
 
-
+P.S.printRawCols()

@@ -1,11 +1,13 @@
 
 from Family import *
+from Scenario import *
 
 class Portfolio:            # or should just be a global
     def __init__(self, f, cash=0):
         self.family = f    # ?
         self.cash = cash    # ?
         self.ritems = []
+        self.S = Scenario()
 
     def ritemsAppend(self,r):
         self.ritems.append(r)
@@ -23,6 +25,7 @@ class Portfolio:            # or should just be a global
     def run(self,startYear,endYear):
         print ("INIT: {}".format(self.summaryString()))
         for y in range(startYear, endYear):
+            self.S.addYear(y)
             print("Starting: {}".format(y))
             Ritem_inv.invSumReset()
             Ritem_income.incSumReset()
@@ -38,6 +41,10 @@ class Portfolio:            # or should just be a global
                 # after all the events are done
                 r.sumToSummary()
             print ("{}: {}".format(y, self.summaryString()))
+            self.S.addColVal('NetW',y,self.netWorth())
+            self.S.addColVal('Inc',y,Ritem_income.value())
+            self.S.addColVal('Exp',y,Ritem_expense.value())
+            self.S.addColVal('Inv',y,Ritem_inv.value())
             self.cash += Ritem_income.value() - Ritem_expense.value();
     def runTilEnd(self,startYear):
         self.run(startYear,self.family.lastYear())
