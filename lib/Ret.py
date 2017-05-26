@@ -40,6 +40,7 @@ class Portfolio:            # or should just be a global
                         #logging.debug ("... run event: {}".format(e.name))
                         e.func(r)
                 # after all the events are done
+                self.S.addColVal(r.name, y,r.value)
                 r.sumToSummary()
             logging.debug("{}: {}".format(y, self.summaryString()))
             self.S.addColVal('NetW',y,self.netWorth())
