@@ -56,4 +56,4 @@ trips.addEvent(2037, lambda r: (r.takeExpense('trip',10)))
 
 
 P.run(2016,F.lastYear())
-
+P.S.printRawCols()
