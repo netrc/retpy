@@ -1,4 +1,5 @@
 
+import logging
 from Family import *
 from Scenario import *
 
@@ -23,24 +24,24 @@ class Portfolio:            # or should just be a global
         
 
     def run(self,startYear,endYear):
-        print ("INIT: {}".format(self.summaryString()))
+        logging.debug("INIT: {}".format(self.summaryString()))
         for y in range(startYear, endYear):
             self.S.addYear(y)
-            print("Starting: {}".format(y))
+            logging.debug("Starting: {}".format(y))
             Ritem_inv.invSumReset()
             Ritem_income.incSumReset()
             Ritem_expense.expSumReset()
             for r in [r for r in self.ritems if r.status]:
-                #print("...doing item: {}".format(r.name))
+                #logging.debug("...doing item: {}".format(r.name))
                 # each "event" is a value ?? or a transfer and a value??
                 r.reset()
                 for e in r.events:
                     if (e.year == y):
-                        #print ("... run event: {}".format(e.name))
+                        #logging.debug ("... run event: {}".format(e.name))
                         e.func(r)
                 # after all the events are done
                 r.sumToSummary()
-            print ("{}: {}".format(y, self.summaryString()))
+            logging.debug("{}: {}".format(y, self.summaryString()))
             self.S.addColVal('NetW',y,self.netWorth())
             self.S.addColVal('Inc',y,Ritem_income.value())
             self.S.addColVal('Exp',y,Ritem_expense.value())
@@ -83,7 +84,7 @@ class Ritem():             # think of this as a column in the sp-sheet
     def transfer(self,n,r,v):
         self.value -= v     # e.g. transfer right out of income
         r.addValue(n,v)
-        print("transfer {} {} + ${} => ${}".format(self.name,n,v,self.value))
+        logging.debug("transfer {} {} + ${} => ${}".format(self.name,n,v,self.value))
 
 
 # This is a column type - used to manage income, adds up to Income pseudo-col
@@ -93,7 +94,7 @@ class Ritem_income(Ritem):
         super().__init__(p,name)
     def addIncome(self,n,v):
         self.value += v
-        print("income {} {} + ${} => ${}".format(self.name,n,v,self.value))
+        logging.debug("income {} {} + ${} => ${}".format(self.name,n,v,self.value))
     def addValue(self,n,v):
     		self.addIncome(n,v)
     def sumToSummary(self):
@@ -114,7 +115,7 @@ class Ritem_expense(Ritem):
     def takeExpense(self,n,v):
         #print("expense {} {} before ${}".format(self.name,n,self.value))
         self.value += v
-        print("expense {} {} + ${} => ${}".format(self.name,n,v,self.value))
+        logging.debug("expense {} {} + ${} => ${}".format(self.name,n,v,self.value))
     def sumToSummary(self):
         Ritem_expense._expSumValue += self.value
         #print("exp sum to sum = {}".format(Ritem_expense._expSumValue))
@@ -135,13 +136,13 @@ class Ritem_inv(Ritem):
         pass            # for investments, don't reset every year
     def setValue(self,n,v):
         self.value = v
-        print("inv {} {} set ${} => ${}".format(self.name,n,v,self.value))
+        logging.debug("inv {} {} set ${} => ${}".format(self.name,n,v,self.value))
     def addValue(self,n,v):
         self.value += v
-        print("inv {} {} add ${} => ${}".format(self.name,n,v,self.value))
+        logging.debug("inv {} {} add ${} => ${}".format(self.name,n,v,self.value))
     def addAPR(self,n,rate):
         self.value *= rate
-        print("inv {} {} apr ${} => ${}".format(self.name,n,rate,self.value))
+        logging.debug("inv {} {} apr ${} => ${}".format(self.name,n,rate,self.value))
     def sumToSummary(self):
         #print("inv sum to summary")
         Ritem_inv._invSumValue += self.value
