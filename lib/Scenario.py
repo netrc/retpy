@@ -1,9 +1,10 @@
 
 class Scenario:
-    def __init__(self):
+    def __init__(self,f=None):
         self.cols = {}    # dict of columns
         self.events = {}  # dict of years: list of events
         self.years = []  # list of years
+        self.f = f      
 
     def addColVal(self, col, y, val):
         if col not in self.cols:
@@ -20,14 +21,17 @@ class Scenario:
             # assert - got to be netw, inc, exp, inv columns
             print("{}: {}".format(y,self.events[y])) 
     def printRawCols(self):
+        self.f.printFamily()
         print("Scenario Run")
         print("Year ",end="")
+        print("Ages ",end="")
         for c in self.cols:
             # title line
             print("{:>8s}".format(c),end="")
         print("")
         for y in self.years:
             print("{:<5d}".format(y),end="")
+            print("{:<8s}".format(self.f.ageString(y)),end="")
             for c in self.cols:
                 v = "${:,.0f}".format(self.cols[c][y]) if y in self.cols[c] else ""
                 print("{:>8s}".format(v),end="")
@@ -38,20 +42,24 @@ class Scenario:
 
 if __name__ == '__main__':
     import unittest
+    from Family import *
     class TC1(unittest.TestCase):
+        def setUp(self):
+            self.f = Family("Smith")
+            self.f.addPerson( Person("john","john",1970,65,85) )
         def test_feature_one(self):
-            s = Scenario()
+            s = Scenario(self.f)
             s.addYear(2017)
             s.addEvent(2017,{'e':"someting"})
         def test_feature_two(self):
-            s = Scenario()
+            s = Scenario(self.f)
             s.addYear(2017)
             s.addEvent(2017,{'e':"someting"})
         def test_print(self):
-            s = Scenario()
+            s = Scenario(self.f)
             s.addColVal("NetW", 2017, 0.00)
         def test_printRawCols(self):
-            s = Scenario()
+            s = Scenario(self.f)
             s.addYear(2016)
             s.addColVal("NetW", 2016, 1.00)
             s.addYear(2017)
