@@ -8,7 +8,7 @@ class Portfolio:            # or should just be a global
         self.family = f    # ?
         self.cash = cash    # ?
         self.ritems = []
-        self.S = Scenario()
+        self.S = Scenario(f)
 
     def ritemsAppend(self,r):
         self.ritems.append(r)
