@@ -16,10 +16,18 @@ joeI = Ritem_income(P,'joeIncome')
 joeI.addEvents(2016,2022, lambda r: (r.addIncome('comp1',200)))
 joeI.addEventsTilEnd(2023,lambda r: (r.addIncome('ssi',30)))
 
+# some inv fund
 invA = Ritem_inv(P,'invA')
 invA.addEvent(2015, lambda r: (r.setValue('invA',30)))
 invA.addEvents(2015,2027, lambda r: (r.addAPR('invAapr',1.06)))
 
+# ret fund - Joe adds to 401k while working
+inv401k = Ritem_inv(P,'inv401k')
+inv401k.addEvent(2015, lambda r: (r.setValue('401k.init',10)))
+inv401k.addEvents(2016, 2022, lambda r: (r.addValue('401k.contrib',10)))
+inv401k.addEvents(2015,2022, lambda r: (r.addAPR('invAapr',1.06)))
+
+# and transfers some to invA while working
 joeI.addEvents(2016,2022, lambda r: (r.transfer('trans',invA,25)) )
 
 # add expense in first year $ ; auto inflated
