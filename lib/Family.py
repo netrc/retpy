@@ -11,6 +11,12 @@ class Family:
     return "{} family".format(self.name)
   def lastYear(self):
     return max( [ p.lastYear() for p in self.members ] )
+  def printFamily(self):
+    print("# {} Family".format(self.name))
+    for p in self.members:
+      print("#   {} ".format(p.summaryString()))
+  def ageString(self,y):
+      return ",".join( [str((y-p.birthYear)) for p in self.members] )
     
 
 
