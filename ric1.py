@@ -1,11 +1,4 @@
 
-# TODO: set retirement/death in Person
-# TODO: use tax rates
-# TODO: how to determine start date - earliest setValue?
-# TODO: how to determine end date - life expectency?
-# TODO: inflation for expenses
-# TODO: normalize addValue / addIncome for all Ritems
-# TODO: need addEventAnnual == forever
 
 import sys
 sys.path.append("lib")
@@ -13,9 +6,8 @@ from Ret import *
 # should be just import R.... R.Port, R.Ritem...
 
 F = Family("Campbell")
-r = Person("Richard","ric",1961,72)
-r = Person("Kristen","krit",1966,68)
-F.addPerson(r)
+F.addPerson( Person("Richard","ric",1961,72) )
+F.addPerson( Person("Kristen","krit",1966,68) )
 
 from Ret import *
 # should be just import R.... R.Port, R.Ritem...
@@ -27,8 +19,11 @@ P = Portfolio(F,cash=50)
 #income joeIncome 2016 2022 200
 rI = Ritem_income(P,'rI')
 # ric born 1961, ret 68 == 2029
-rI.addEvents(2017,2029, lambda r: (r.addIncome('comp1',100)))
-rI.addEvents(2030,F.lastYear(), lambda r: (r.addIncome('ssi',36)))
+rI.addEvents(2017,2029, lambda r: (r.addIncome('r',100)))
+rI.addEvents(2030,F.lastYear(), lambda r: (r.addIncome('r-ssi',36)))
+# k born 1966, ret 65 == 2031
+rI.addEvents(2017,2031, lambda r: (r.addIncome('k',100)))
+rI.addEvents(2032,F.lastYear(), lambda r: (r.addIncome('k-ssi',36)))
 
 invA = Ritem_inv(P,'invA')
 invA.addEvent(2016, lambda r: (r.setValue('invA',300)))
@@ -51,8 +46,7 @@ l.addEvents(2017,2033, lambda r: (r.takeExpense('living',50)))
 l.addEvents(2034,F.lastYear(), lambda r: (r.takeExpense('living',30)))
 
 trips = Ritem_expense(P,'trips')
-trips.addEvent(2035, lambda r: (r.takeExpense('trip',10)))
-trips.addEvent(2037, lambda r: (r.takeExpense('trip',10)))
+trips.addEvents(2032,2042, lambda r: (r.takeExpense('trip',10)))
 
 
 P.run(2016,F.lastYear())
