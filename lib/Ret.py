@@ -9,6 +9,7 @@ class Portfolio:            # or should just be a global
         self.cash = cash    # ?
         self.ritems = []
         self.S = Scenario(f)
+        self.inflation = 1.03
 
     def ritemsAppend(self,r):
         self.ritems.append(r)
@@ -35,6 +36,7 @@ class Portfolio:            # or should just be a global
                 #logging.debug("...doing item: {}".format(r.name))
                 # each "event" is a value ?? or a transfer and a value??
                 r.reset()
+                r.currentYear = y   # used for various Ritems, e.g. expenseInflation
                 for e in r.events:
                     if (e.year == y):
                         #logging.debug ("... run event: {}".format(e.name))
@@ -55,6 +57,7 @@ class Event:
     def __init__(self,year,func):
         self.year = year
         self.func = func
+        self.currentYear = 0
 
 class Ritem():             # think of this as a column in the sp-sheet
     def __init__(self,portfolio,name):
@@ -117,6 +120,12 @@ class Ritem_expense(Ritem):
         #print("expense {} {} before ${}".format(self.name,n,self.value))
         self.value += v
         logging.debug("expense {} {} + ${} => ${}".format(self.name,n,v,self.value))
+    def takeExpenseInflation(self,n,v,baseYear):
+        logging.debug("expenseInflation {} {} before ${}".format(self.name,n,self.value))
+        print("ei: {} {} {} {} {} {}".format(self.name,n,self.value,self.currentYear,baseYear,self.portfolio.inflation))
+        self.value += v * self.portfolio.inflation**(self.currentYear-baseYear)
+      # add in years
+        logging.debug("expense {} {} + ${} => ${}".format(self.name,n,v,self.value))
     def sumToSummary(self):
         Ritem_expense._expSumValue += self.value
         #print("exp sum to sum = {}".format(Ritem_expense._expSumValue))
@@ -134,7 +143,7 @@ class Ritem_inv(Ritem):
     def __init__(self,p,name):
         super().__init__(p,name)
     def reset(self):
-        pass            # for investments, don't reset every year
+        pass            # for investments, don't reset every year; n.b. overrides base class
     def setValue(self,n,v):
         self.value = v
         logging.debug("inv {} {} set ${} => ${}".format(self.name,n,v,self.value))

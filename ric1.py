@@ -36,9 +36,9 @@ invA.addEvents(2030,F.lastYear(), lambda r: (r.transfer('trans',rI,25)) )
 #f-expense house 2014 2023 50
 h = Ritem_expense(P,'house')
 # kids out 2005+18 = 2033
-h.addEvents(2017,2033, lambda r: (r.takeExpense('bigH',50)))
+h.addEvents(2017,2033, lambda r: (r.takeExpenseInflation('bigH',50,2017)))
 #f-expense house 2024 2027 50
-h.addEvents(2034,F.lastYear(), lambda r: (r.takeExpense('smallH',30)))
+h.addEvents(2034,F.lastYear(), lambda r: (r.takeExpenseInflation('smallH',30,2034)))
 
 #living expenses
 l = Ritem_expense(P,'lE')
