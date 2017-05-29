@@ -1,0 +1,58 @@
+
+Portfolio:
+
+# comment / strict (?) ordering of items
+Family: "Smith"
+  Person: "John","j",1970,65,85   # name, nickname, birth, ret age, death age
+
+cash: 175
+
+Scenario: "A", "long doc string"
+
+income: "joeInc", "long doc string"
+  addEvents:  2016,2022, 'comp1', addIncome: 200, "doc note"
+  addEventsTilEnd: 2023, 'ssi',  addIncome: 30, "doc note"
+  addEvents: 2016,2022, transfer: 'trans', invA, 25
+
+investment: "invA"
+  addEvent: 2015, 'start',30
+  # have to add APR for each year (maybe option in initializer)
+  addEvents: 2015,2027, addAPR: 'normalAPR',1.06
+
+expense: 'house'
+  addEvents: 2014,2023, takeExpense: 'bigH',50
+  # could have a sell event; or just change values here
+  addEvents: 2024,2027, takeExpense: 'smallH',30
+
+expense: 'trips'
+  # inflation for expenses
+  addEvent: 2025, takeExpense: 'trip',5
+
+
+run: tilEnd, 2014
+output: printRawCols
+
+
+# problem with "json" - no comments;  (or need json pre-proc for comments?)
+#{ 
+#  Portfolio: {
+#    Family: {
+#      name: "Smith",
+#      Persons: [
+#        { "John","j",1970,65,85 }  # name, nickname, birth, ret age, death age
+#      ]
+#    },
+#    # starting vals
+#    cash: 175,
+#    income: [
+#      { name: 'joeInc',
+#        events: [
+#          { 2016,2022, 'comp1', addIncome: 200, "doc note" },
+#          { 2023, #tilEnd, 'ssi',  addIncome: 30, "doc note" },
+#          { 2016,2022, transfer: 'trans', invA, 25 }
+#        ]
+#    ],
+#    investment: [
+#    ]
+#  }
+#}
