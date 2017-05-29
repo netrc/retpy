@@ -1,10 +1,13 @@
 
+from Ret import *
+
 class Scenario:
     def __init__(self,f=None):
         self.cols = {}    # dict of columns
         self.events = {}  # dict of years: list of events
         self.years = []  # list of years
         self.f = f      
+        self.rLists = { }
 
     def addColVal(self, col, y, val):
         if col not in self.cols:
@@ -20,21 +23,35 @@ class Scenario:
         for y in self.years:
             # assert - got to be netw, inc, exp, inv columns
             print("{}: {}".format(y,self.events[y])) 
+    def ritemLists( self, incList, expList, invList ):
+            self.rLists["Inc"] = incList
+            self.rLists["Exp"] = expList
+            self.rLists["Inv"] = invList
     def printRawCols(self):
         self.f.printFamily()
         print("Scenario Run")
+        # title line
         print("Year ",end="")
         print("Ages ",end="")
-        for c in self.cols:
-            # title line
+        print("{:>8s}".format("NetW"),end="")
+        for c in ["Inc", "Exp", "Inv"]:
             print("{:>8s}".format(c),end="")
+            for cr in self.rLists[c]:
+                print("{:>8s}".format(cr.name),end="")
         print("")
+            
         for y in self.years:
             print("{:<5d}".format(y),end="")
             print("{:<8s}".format(self.f.ageString(y)),end="")
-            for c in self.cols:
+
+            v = "${:,.0f}".format(self.cols["NetW"][y]) if y in self.cols["NetW"] else ""
+            print("{:>8s}".format(v),end="")
+            for c in ["Inc", "Exp", "Inv"]:
                 v = "${:,.0f}".format(self.cols[c][y]) if y in self.cols[c] else ""
                 print("{:>8s}".format(v),end="")
+                for cr in self.rLists[c]:
+                    v = "${:,.0f}".format(self.cols[cr.name][y]) if y in self.cols[cr.name] else ""
+                    print("{:>8s}".format(v),end="")
             print("")
 
 

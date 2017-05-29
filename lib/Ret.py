@@ -52,6 +52,8 @@ class Portfolio:            # or should just be a global
             logging.debug("{}: {}".format(y, self.summaryString()))
             self.S.addColVal('NetW',y,self.netWorth())
             self.cash += RSummary.value("Inc") - RSummary.value("Exp");
+            # hack
+            self.S.ritemLists( RSummary._sumItems["Inc"].ritems, RSummary._sumItems["Exp"].ritems, RSummary._sumItems["Inv"].ritems )
     def runTilEnd(self,startYear):
         self.run(startYear,self.family.lastYear())
 
