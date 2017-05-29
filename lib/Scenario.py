@@ -36,7 +36,7 @@ class Scenario:
         print("{:>8s}".format("NetW"),end="")
         for c in ["Inc", "Exp", "Inv"]:
             print("{:>8s}".format(c),end="")
-            for cr in self.rLists[c]:
+            for cr in self.rLists[c] if c in self.rLists else []:   # only [] if/when running Scenario tests
                 print("{:>8s}".format(cr.name),end="")
         print("")
             
@@ -47,11 +47,12 @@ class Scenario:
             v = "${:,.0f}".format(self.cols["NetW"][y]) if y in self.cols["NetW"] else ""
             print("{:>8s}".format(v),end="")
             for c in ["Inc", "Exp", "Inv"]:
-                v = "${:,.0f}".format(self.cols[c][y]) if y in self.cols[c] else ""
+                v = "${:,.0f}".format(self.cols[c][y]) if c in self.cols and y in self.cols[c] else ""
                 print("{:>8s}".format(v),end="")
-                for cr in self.rLists[c]:
-                    v = "${:,.0f}".format(self.cols[cr.name][y]) if y in self.cols[cr.name] else ""
-                    print("{:>8s}".format(v),end="")
+                if c in self.rLists:      # only false if/when running Scenario tests
+                    for cr in self.rLists[c]:
+                        v = "${:,.0f}".format(self.cols[cr.name][y]) if y in self.cols[cr.name] else ""
+                        print("{:>8s}".format(v),end="")
             print("")
 
 
@@ -81,11 +82,11 @@ if __name__ == '__main__':
             s.addColVal("NetW", 2016, 1.00)
             s.addYear(2017)
             s.addColVal("NetW", 2017, 3.00)
-            s.addColVal("Incm", 2017, 3.00)
+            s.addColVal("Inc", 2017, 3.00)
             s.addColVal("Exp", 2017, -2.00)
             s.addYear(2018)
             s.addColVal("NetW", 2018, 4003.00)
-            s.addColVal("Incm", 2018, 4000.00)
+            s.addColVal("Inc", 2018, 4000.00)
             s.printRawCols()
 
     unittest.main()
