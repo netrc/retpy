@@ -1,6 +1,6 @@
 
 
-= retpy - retirement planning
+# retpy - retirement planning
 
 You can make a spreadsheet with rows for years and columns for income, expenses, etc. This is fine, but the calculations behind the spreadsheet are hard to see. It's also hard to see why changes in values happen or what sums up to where
 
@@ -8,7 +8,7 @@ This tool uses a programmatic listing of items (income, expenses) and automatic 
 
 Includes settable investment returns, inflation for expenses.
 
-= Functionality
+# Functionality
 
 Items
 * income - add once/multiple. Does not sum internally - sums to Income col
@@ -21,31 +21,32 @@ Events
 Runs
 * Run events from years y1-y2, or from y1 until death
 
-== TODO
-# TODO: print ages in Scenario
-# TODO: Scenario - sort raw columns by class Income, Exp, Inv
-# TODO: make putting summary rows into Scenario per year a Ritem_* member func
-# TODO: Scenario - raw printout
-# TODO: Scenario - table print
-# TODO: Scenario - html print
-# TODO: Scenario - csv? print
-# TODO: item - insurance, with payout
-# TODO: item ? long term care?
-# TODO: event - person dates are events that trigger things?
-#   ? death event stops income?  this means more coupling of items and people
-# TODO: use retirement/death in Person - where?
-# TODO: use tax rates
-# TODO: how to determine start date - earliest setValue?
-# TODO: how to determine end date - life expectency?
-# TODO: inflation for expenses
-# TODO: normalize addValue / addIncome for all Ritems
-# TODO: differentiate correct values from future guestimates (? todays date)
+## TODO
+* TODO: expenses include inflation
+* TODO: make putting summary rows into Scenario per year a Ritem_* member func
+* TODO: Scenario - raw printout
+* TODO: Scenario - table print
+* TODO: Scenario - html print
+* TODO: Scenario - csv? print
+* TODO: item - insurance, with payout
+* TODO: item ? long term care?
+* TODO: event - person dates are events that trigger things?
+*   ? death event stops income?  this means more coupling of items and people
+* TODO: use retirement/death in Person - where?
+* TODO: use tax rates
+* TODO: how to determine start date - earliest setValue?
+* TODO: how to determine end date - life expectency?
+* TODO: inflation for expenses
+* TODO: normalize addValue / addIncome for all Ritems
+* TODO: differentiate correct values from future guestimates (? todays date)
+* TODO: Scenario - fix hack in sort raw columns by class Income, Exp, Inv
 
-
-== DONE
-# DONE: need addEventAnnual == forever
-# DONE: need to sum up each year's events (if possible) for each 'column'
-# DONE: store run data in Scenario
-# TODO: set retirement/death in Person
+## DONE
+* DONE: Scenario - sort raw columns by class Income, Exp, Inv
+* DONE: print ages in Scenario
+* DONE: need addEventAnnual == forever
+* DONE: need to sum up each year's events (if possible) for each 'column'
+* DONE: store run data in Scenario
+* TODO: set retirement/death in Person
 
 
