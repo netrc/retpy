@@ -81,7 +81,8 @@ class Ritem():             # think of this as a column in the sp-sheet
         self.events.append( Event(year, func) )
     def addEvents(self, firstYear, lastYear, func):
         for y in range(firstYear,lastYear+1):
-            self.events.append( Event(y, func) )
+            self.addEvent( y, func )
+        # TODO: inactive is not really used here.....
         self.events.append( Event(lastYear+1, lambda r: r.inactive) )
     def addEventsTilEnd(self, firstYear, func):
         self.addEvents(firstYear,self.portfolio.family.lastYear(), func)
