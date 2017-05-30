@@ -1,10 +1,6 @@
 
 
 # TODO: make putting summary rows into Scenario per year a Ritem_* member func
-# TODO: Scenario - raw printout
-# TODO: Scenario - table print
-# TODO: Scenario - html print
-# TODO: Scenario - csv? print
 # TODO: item - annuity investment, payout year $ and startyear
 # TODO: item - insurance, with payout
 # TODO: item ? long term care?
@@ -16,7 +12,6 @@
 # TODO: how to determine end date - life expectency?
 # TODO: normalize addValue / addIncome for all Ritems
 # TODO: differentiate correct values from future guestimates (? todays date)
-# TODO: Scenario - fix hack in sort raw columns by class Income, Exp, Inv
 
 # DONE: expenses include inflation
 # DONE: Scenario - sort raw columns by class Income, Exp, Inv

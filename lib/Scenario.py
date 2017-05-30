@@ -30,10 +30,13 @@ class Scenario:
         for y in self.years:
             # assert - got to be netw, inc, exp, inv columns
             print("{}: {}".format(y,self.events[y])) 
+        # TODO: Scenario - fix hack in sort raw columns by class Income, Exp, Inv
     def ritemLists( self, incList, expList, invList ):
             self.rLists["Inc"] = incList
             self.rLists["Exp"] = expList
             self.rLists["Inv"] = invList
+    # TODO: Scenario - html print
+    # TODO: Scenario - csv? print
     def printRawCols(self):
         self.f.printFamily()
         print("Scenario Run")
@@ -97,3 +100,4 @@ if __name__ == '__main__':
             s.printRawCols()
 
     unittest.main()
+
