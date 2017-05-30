@@ -42,8 +42,8 @@ h.addEvents(2034,F.lastYear(), lambda r: (r.takeExpenseInflation('smallH',30,203
 
 #living expenses
 l = Ritem_expense(P,'lE')
-l.addEvents(2017,2033, lambda r: (r.takeExpense('living',50)))
-l.addEvents(2034,F.lastYear(), lambda r: (r.takeExpense('living',30)))
+l.addEvents(2017,2033, lambda r: (r.takeExpenseInflation('living',50,2017)))
+l.addEvents(2034,F.lastYear(), lambda r: (r.takeExpenseInflation('living',30,2034)))
 
 trips = Ritem_expense(P,'trips')
 trips.addEvents(2032,2042, lambda r: (r.takeExpense('trip',10)))
