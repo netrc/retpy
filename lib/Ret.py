@@ -23,6 +23,7 @@ class Portfolio:            # or should just be a global
         return self.cash;
 
     def netWorth(self):
+        #print("cash:${}  Inc:${}  Inv:${}  Exp:${}".format( self.cash, RSummary.value("Inc") , RSummary.value("Inv") , RSummary.value("Exp") ))
         return  self.cash + RSummary.value("Inc") + RSummary.value("Inv") - RSummary.value("Exp")
 
     def summaryString(self):
@@ -52,6 +53,7 @@ class Portfolio:            # or should just be a global
             logging.debug("{}: {}".format(y, self.summaryString()))
             self.S.addColVal('NetW',y,self.netWorth())
             self.cash += RSummary.value("Inc") - RSummary.value("Exp");
+            self.S.addColVal('Cash',y,self.cash)
             # hack
             self.S.ritemLists( RSummary._sumItems["Inc"].ritems, RSummary._sumItems["Exp"].ritems, RSummary._sumItems["Inv"].ritems )
     def runTilEnd(self,startYear):
@@ -157,18 +159,28 @@ import unittest
 
 class TC1(unittest.TestCase):
     def test_feature_one(self):
-        print("TC1 test")
+        #print("TC1 test")
         F = Family("Smith");
         F.addPerson(Person("John","j",1970))
         P = Portfolio(F)
-        joeI = Ritem_income(P,'joeIncome')
+        joeI = Ritem_income(P,'joeI')
         joeI.addEvents(2016,2022, lambda r: (r.addIncome('comp1',2))) # 7 years, $14
         joeI.addEvents(2021,2022, lambda r: (r.addIncome('comp1',4))) # 2 years, $8  // bonus
-        joeI2 = Ritem_income(P,'joeIncome2')
+        joeI2 = Ritem_income(P,'joeI2')
         joeI2.addEvents(2017,2019, lambda r: (r.addIncome('comp2',3)))  # 3 years, $9
+        joeE = Ritem_expense(P,'joeE')
+        joeE.addEvents(2020,2021, lambda r: (r.takeExpense('exp1',4)))  # 2 years, $8
         P.run(2016,2022)    
+        self.assertEqual(P.S.getColYear("Inc",2016),2)
+        self.assertEqual(P.S.getColYear("Inc",2017),5)
+        self.assertEqual(P.S.getColYear("Inc",2022),6)
+        self.assertEqual(P.S.getColYear("Exp",2021),4)
+        self.assertEqual(P.S.getColYear("NetW",2016),2)
+        self.assertEqual(P.S.getColYear("NetW",2020),15)
+        self.assertEqual(P.S.getColYear("NetW",2022),23)
         #self.assertEqual(P.netWorth(), 31) # $14 + $8 + $9 = $31
-        self.assertEqual(P.netWorth(), 37) # $14 + $8 + $9 = $31
+        # TODO: we don't need to check netWorth? note we can check scenario as above
+        #self.assertEqual(P.netWorth(), 37) # $14 + $8 + $9 = $31
         P.S.printRawCols()
 
 if __name__ == '__main__':
