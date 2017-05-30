@@ -13,12 +13,19 @@ class Scenario:
         if col not in self.cols:
             self.cols[col] = {}
         self.cols[col][y] = val
+        # TODO: autodeduce new years here and add to self.years rather than explicit call in Ret.py:36? 
     def addEvent(self,y,ev):
         if y not in self.events:
             self.events[y] = []
         self.events[y].append(ev)
     def addYear(self,y):
         self.years.append(y)
+    def getColYear(self,col,y):
+        if col not in self.cols:
+            return "getCY: bad col"
+        if y not in self.cols[col]:
+            return "getCY: bad y"
+        return self.cols[col][y]
     def printRaw(self):
         for y in self.years:
             # assert - got to be netw, inc, exp, inv columns
@@ -34,7 +41,7 @@ class Scenario:
         print("Year ",end="")
         print("Ages ",end="")
         print("{:>8s}".format("NetW"),end="")
-        for c in ["Inc", "Exp", "Inv"]:
+        for c in ["Cash", "Inc", "Exp", "Inv"]:
             print("{:>8s}".format(c),end="")
             for cr in self.rLists[c] if c in self.rLists else []:   # only [] if/when running Scenario tests
                 print("{:>8s}".format(cr.name),end="")
@@ -46,7 +53,7 @@ class Scenario:
 
             v = "${:,.0f}".format(self.cols["NetW"][y]) if y in self.cols["NetW"] else ""
             print("{:>8s}".format(v),end="")
-            for c in ["Inc", "Exp", "Inv"]:
+            for c in ["Cash", "Inc", "Exp", "Inv"]:
                 v = "${:,.0f}".format(self.cols[c][y]) if c in self.cols and y in self.cols[c] else ""
                 print("{:>8s}".format(v),end="")
                 if c in self.rLists:      # only false if/when running Scenario tests
