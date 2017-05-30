@@ -1,0 +1,29 @@
+
+
+# TODO: make putting summary rows into Scenario per year a Ritem_* member func
+# TODO: Scenario - raw printout
+# TODO: Scenario - table print
+# TODO: Scenario - html print
+# TODO: Scenario - csv? print
+# TODO: item - annuity investment, payout year $ and startyear
+# TODO: item - insurance, with payout
+# TODO: item ? long term care?
+# TODO: event - person dates are events that trigger things?
+#   ? death event stops income?  this means more coupling of items and people
+# TODO: use retirement/death in Person - where?
+# TODO: use tax rates
+# TODO: how to determine start date - earliest setValue?
+# TODO: how to determine end date - life expectency?
+# TODO: normalize addValue / addIncome for all Ritems
+# TODO: differentiate correct values from future guestimates (? todays date)
+# TODO: Scenario - fix hack in sort raw columns by class Income, Exp, Inv
+
+# DONE: expenses include inflation
+# DONE: Scenario - sort raw columns by class Income, Exp, Inv
+# DONE: print ages in Scenario
+# DONE: need addEventAnnual == forever
+# DONE: need to sum up each year's events (if possible) for each 'column'
+# DONE: store run data in Scenario
+# DONE: set retirement/death in Person
+
+
