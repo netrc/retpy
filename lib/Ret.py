@@ -51,6 +51,7 @@ class Portfolio:            # or should just be a global
                 self.S.addColVal(sname,y,RSummary.value(sname))
 
             logging.debug("{}: {}".format(y, self.summaryString()))
+            # TODO: somehow make NetW and Cash columns like RSummary, so no special adding here
             self.S.addColVal('NetW',y,self.netWorth())
             self.cash += RSummary.value("Inc") - RSummary.value("Exp");
             self.S.addColVal('Cash',y,self.cash)
