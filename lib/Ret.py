@@ -16,8 +16,10 @@ class Portfolio:            # or should just be a global
         RSummary("Exp")
         RSummary("Inv")
 
+    # TODO: Take out Portfolio ritems ; now all ritems are stored only in Summary columns
     def ritemsAppend(self,r):
-        self.ritems.append(r)
+        #self.ritems.append(r)
+        pass
 
     def cash(self):
         return self.cash;
@@ -74,6 +76,7 @@ class Ritem():             # think of this as a column in the sp-sheet
         self.events = []
         self.value = 0          ## the instance var for each (col) item
         self.portfolio = portfolio
+        TODO: no longer doing ritems in portfolio
         self.portfolio.ritemsAppend(self)
     def reset(self):
         self.value = 0;     # e.g. for income and expense, we start at 0
@@ -114,6 +117,7 @@ class RSummary():
 # This is a column type - used to manage income, adds up to Income pseudo-col
 class Ritem_income(Ritem):
     def __init__(self,p,name):
+        # TODO: no longer in super (in the summary class)
         super().__init__(p,name)          # there's a main ritem list in the superclass
         RSummary.addRitem("Inc",self)     # and then a collection list in this named summary column
     def addIncome(self,n,v):
