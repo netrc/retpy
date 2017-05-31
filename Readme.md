@@ -21,3 +21,17 @@ Events
 Runs
 * Run events from years y1-y2, or from y1 until death
 
+
+## Architecture
+Essentially building a hard-coded set of spreadsheet cells
+* Some built-in columns - net worth, cash, income, expenses
+* "columns" are an instance of Income, Expense (others?)
+* "rows" are year by year
+* hard-coded value fill procedures (addIncome, takeExpense)
+* hard-coded transactions (i.e. cell equations), like takeExpenseInflation or transfer
+** these are restricted set of cell dependencies
+* and restricted/pre-defined outputs - summary columns...
+
+## See Also
+* jupyter notebooks
+* Stencila - https://stenci.la/
